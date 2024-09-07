@@ -1,7 +1,9 @@
 package factory;
 
-import org.example.dao.DireccionDAO;
-import org.example.dao.PersonaDAO;
+import dao.ClienteDAO;
+import dao.FacturaDAO;
+import dao.FacturaProductoDAO;
+import dao.ProductoDAO;
 
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
@@ -58,13 +60,21 @@ public class DerbyFactory extends AbstractFactory{
         }
     }
 
-  // @Override
-   // public PersonaDAO getPersonaDAO() {
-    //    return new PersonaDAO(getConnection());
-    //}
+    public ClienteDAO getClienteDAO() {
+        return new ClienteDAO(getConnection());
+    }
 
-   // @Override
-   // public DireccionDAO getDireccionDAO() {
-   //     return new DireccionDAO(getConnection());
-   // }
+    public FacturaDAO getFacturaDAO() {
+        return new FacturaDAO(getConnection());
+    }
+
+    @Override
+    public FacturaProductoDAO getFacturaProductoDAO() {
+        return new FacturaProductoDAO(getConnection());
+    }
+
+    public ProductoDAO getProductoDAO() {
+        return new ProductoDAO(getConnection());
+    }
+
 }

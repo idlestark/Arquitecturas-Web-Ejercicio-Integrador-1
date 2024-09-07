@@ -1,23 +1,25 @@
 package factory;
 
-import org.example.dao.DireccionDAO;
-import org.example.dao.PersonaDAO;
+import dao.ClienteDAO;
+import dao.FacturaDAO;
+import dao.FacturaProductoDAO;
+import dao.ProductoDAO;
 
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class MySQLDAOFactory extends AbstractFactory{
+public class MySQLDAOFactory extends AbstractFactory {
 
 
     private static MySQLDAOFactory instance = null;
 
     public static final String DRIVER = "com.mysql.cj.jdbc.Driver";
-    public static final String uri = "jdbc:mysql://localhost:3306/demodao";
+    public static final String uri = "jdbc:mysql://localhost:3306/integrador1";
     public static Connection conn;
 
-    private MySQLDAOFactory(){
+    private MySQLDAOFactory() {
 
     }
 
@@ -29,11 +31,11 @@ public class MySQLDAOFactory extends AbstractFactory{
     }
 
     public static Connection createConnection() {
-        if(conn != null){
+        if (conn != null) {
             return conn;
         }
         String driver = DRIVER;
-        try{
+        try {
             Class.forName(driver).getDeclaredConstructor().newInstance();
         } catch (ClassNotFoundException | InvocationTargetException | InstantiationException | IllegalAccessException |
                  NoSuchMethodException e) {
@@ -41,8 +43,8 @@ public class MySQLDAOFactory extends AbstractFactory{
             System.exit(1);
         }
 
-        try{
-            conn = DriverManager.getConnection(uri, "root", "dragonoidEV19");
+        try {
+            conn = DriverManager.getConnection(uri, "root", "");
             conn.setAutoCommit(false);
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -51,7 +53,7 @@ public class MySQLDAOFactory extends AbstractFactory{
         return conn;
     }
 
-    public void closeConnection(){
+    public void closeConnection() {
         try {
             conn.close();
         } catch (SQLException e) {
@@ -59,13 +61,33 @@ public class MySQLDAOFactory extends AbstractFactory{
         }
     }
 
-  //  @Override
-   // public PersonaDAO getPersonaDAO() {
-     //   return new PersonaDAO(createConnection());
-   // }
+    public FacturaDAO getFacturaDAO() {
+        return new FacturaDAO(createConnection());
+    }
 
-   // @Override
-  //  public DireccionDAO getDireccionDAO() {
-  //      return new DireccionDAO(createConnection());
-   / }
+    @Override
+    public FacturaProductoDAO getFacturaProductoDAO() {
+        return new FacturaProductoDAO(createConnection());
+    }
+
+    public ClienteDAO getClienteDAO() {
+        return new ClienteDAO(createConnection());
+    }
+
+    public FacturaProductoDAO getIdFactura() {
+        return new FacturaProductoDAO(createConnection());
+    }
+
+    public ProductoDAO getProductoDAO() {
+        return new ProductoDAO(createConnection());
+    }
+    //  @Override
+    // public PersonaDAO getPersonaDAO() {
+    //   return new PersonaDAO(createConnection());
+    // }
+
+    // @Override
+    //public DireccionDAO getDireccionDAO() {
+    //   return new DireccionDAO(createConnection());
+
 }
