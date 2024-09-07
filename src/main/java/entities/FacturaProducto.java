@@ -7,8 +7,8 @@ public class FacturaProducto {
     private Integer cantidad;
 
     public FacturaProducto(Integer idFactura, Integer idProducto, Integer cantidad) {
-        idFactura = idFactura;
-        idProducto = idProducto;
+        this.idFactura = idFactura;
+        this.idProducto = idProducto;
         this.cantidad = cantidad;
     }
 
@@ -16,24 +16,12 @@ public class FacturaProducto {
         return idFactura;
     }
 
-    public void setIdFactura(Integer idFactura) {
-        idFactura = idFactura;
-    }
-
     public Integer getIdProducto() {
         return idProducto;
     }
 
-    public void setIdProducto(Integer idProducto) {
-        idProducto = idProducto;
-    }
-
     public Integer getCantidad() {
         return cantidad;
-    }
-
-    public void setCantidad(Integer cantidad) {
-        this.cantidad = cantidad;
     }
 
     @Override
@@ -44,4 +32,5 @@ public class FacturaProducto {
                 ", cantidad=" + cantidad +
                 '}';
     }
+
 }
