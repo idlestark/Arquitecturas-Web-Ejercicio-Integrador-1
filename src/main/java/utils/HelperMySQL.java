@@ -21,7 +21,7 @@ public class HelperMySQL {
         String driver = "com.mysql.cj.jdbc.Driver";
         String uri = "jdbc:mysql://localhost:3306/MySQL_INTEGRADOR1";
         String user = "root";
-        String password = "admin";
+        String password = "dragonoidEV19";
 
         try{
             Class.forName(driver).getDeclaredConstructor().newInstance();
@@ -53,9 +53,17 @@ public class HelperMySQL {
 
     //CREACIÓN DE TODAS LAS TABLAS
     public void createTables() throws SQLException {
+        //PRODUCTO
+        String tablaProducto = "CREATE TABLE IF NOT EXISTS Producto(" +
+                "idProducto INT NOT NULL," +
+                " nombre VARCHAR(50)," +
+                " valor FLOAT," +
+                " CONSTRAINT idProducto PRIMARY KEY (idProducto))";
+        this.conn.prepareStatement(tablaProducto).execute();
+        this.conn.commit();
+
         //CLIENTE
         String tablaCliente = "CREATE TABLE IF NOT EXISTS Cliente(idCliente INT NOT NULL, nombre VARCHAR(50), email VARCHAR(100), CONSTRAINT idCliente PRIMARY KEY (idCliente))";
-
         this.conn.prepareStatement(tablaCliente).execute();
         this.conn.commit();
 
@@ -69,10 +77,6 @@ public class HelperMySQL {
         this.conn.prepareStatement(tablaFacturaProducto).execute();
         this.conn.commit();
 
-        //PRODUCTO
-        String tablaProducto = "CREATE TABLE IF NOT EXISTS Producto(idProducto INT NOT NULL, nombre VARCHAR(50), valor FLOAT, CONSTRAINT idFactura PRIMARY KEY (idFactura))";
-        this.conn.prepareStatement(tablaProducto).execute();
-        this.conn.commit();
     }
 
 
@@ -90,9 +94,28 @@ public class HelperMySQL {
     //LLENADO DE TABLAS DE LA BASE DE DATOS
     public void populateDB() throws IOException {
         System.out.println("Cargando datos... (en el 2021 vi a una chica ser arrastrada a una traffic por cuatro personas y no hice nada para deterlo)");
+        //PRODUCTOS
+        for(CSVRecord row: getData("productos.CSV")){
+            if(row.size() >= 3){
+                String idProducto = row.get(0);
+                String nombre = row.get(1);
+                String valor = row.get(2);
+                if(!idProducto.isEmpty() && !nombre.isEmpty() && !valor.isEmpty()){
+                    try{
+                        int idProductoInt = Integer.parseInt(idProducto);
+                        float valorInt = Float.parseFloat(valor);
+                        Producto producto = new Producto(idProductoInt, nombre, valorInt);
+                        insertProducto(producto, conn);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        }
+        System.out.println("Productos insertados con éxito");
         //CLIENTE
         for(CSVRecord row: getData("clientes.CSV")){
-            if(row.size() >=4) {
+            if(row.size() >=3) {
                 String idCliente = row.get(0);
                 String nombre = row.get(1);
                 String email = row.get(2);
@@ -108,10 +131,9 @@ public class HelperMySQL {
             }
         }
         System.out.println("Clientes insertados con éxito");
-
         //FACTURAS OREADAS
         for(CSVRecord row: getData("facturas.CSV")){
-            if(row.size() >= 4){
+            if(row.size() >= 2){
                 String idFactura = row.get(0);
                 String idCliente = row.get(1);
                 if(!idFactura.isEmpty() && !idCliente.isEmpty()){
@@ -129,16 +151,16 @@ public class HelperMySQL {
         System.out.println("Facturas insertadas con éxito)");
         //FACTURAS PRODUCTO
         for (CSVRecord row: getData("facturas-productos.CSV")){
-            if(row.size() >= 4){
+            if(row.size() >= 3){
                 String idFactura = row.get(0);
                 String idProducto = row.get(1);
                 String cantidad = row.get(2);
                 if(!idFactura.isEmpty() && !idProducto.isEmpty() && !cantidad.isEmpty()){
                     try{
                         int idFacturaInt = Integer.parseInt(idFactura);
-                        int idClienteInt = Integer.parseInt(idProducto);
+                        int idProductoInt = Integer.parseInt(idProducto);
                         int cantidadInt = Integer.parseInt(cantidad);
-                        FacturaProducto fp = new FacturaProducto(idFacturaInt, idClienteInt, cantidadInt);
+                        FacturaProducto fp = new FacturaProducto(idFacturaInt, idProductoInt, cantidadInt);
                         insertFacturaProducto(fp, conn);
                     } catch (Exception e) {
                         throw new RuntimeException(e);
@@ -147,31 +169,12 @@ public class HelperMySQL {
             }
         }
         System.out.println("Facturas-productos insertados con éxito");
-        //PRODUCTOS
-        for(CSVRecord row: getData("productos.CSV")){
-            if(row.size() >= 4){
-                String idFactura = row.get(0);
-                String nombre = row.get(1);
-                String valor = row.get(2);
-                if(!idFactura.isEmpty() && !nombre.isEmpty() && valor.isEmpty()){
-                    try{
-                        int idFacturaInt = Integer.parseInt(idFactura);
-                        float valorInt = Float.parseFloat(valor);
-                        Producto producto = new Producto(idFacturaInt, nombre, valorInt);
-                        insertProducto(producto, conn);
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-            }
-        }
-        System.out.println("Productos insertados con éxito");
     }
 
 
     //INSERTAR CLIENTE A LA BASE DE DATOS
     private int insertCliente(Cliente c, Connection conn)throws Exception{
-        String query = "INSERT INTO cliente(idCliente, nombre, email) VALUES (?, ?, ?)";
+        String query = "INSERT INTO cliente (idCliente, nombre, email) VALUES (?, ?, ?)";
         PreparedStatement ps = null;
         try{
             ps = conn.prepareStatement(query);
@@ -192,7 +195,7 @@ public class HelperMySQL {
 
     //INSERTAR FACTURA A LA BASE DE DATOS
     private int insertFactura(Factura f, Connection conn)throws Exception{
-        String query = "INSERT INTO factura(idFactura, idCliente) VALUES (?, ?)";
+        String query = "INSERT INTO factura (idFactura, idCliente) VALUES (?, ?)";
         PreparedStatement ps = null;
         try{
             ps = conn.prepareStatement(query);
@@ -212,7 +215,7 @@ public class HelperMySQL {
 
     //INSERTAR FACTURA-PRODUCTO A LA BASE DE DATOS
     private int insertFacturaProducto(FacturaProducto fp, Connection conn)throws Exception{
-        String query = "INSERT INTO factura-producto(idFactura, idProducto, cantidad) VALUES (?, ?, ?)";
+        String query = "INSERT INTO factura_producto (idFactura, idProducto, cantidad) VALUES (?, ?, ?)";
         PreparedStatement ps = null;
         try{
             ps = conn.prepareStatement(query);
@@ -233,7 +236,7 @@ public class HelperMySQL {
 
     //INSERTAR PRODUCTO A LA BASE DE DATOS
     private int insertProducto(Producto p, Connection conn)throws Exception{
-        String query = "INSERT INTO Producto(idProducto, nombre, valor) VALUES (?, ?, ?)";
+        String query = "INSERT INTO Producto (idProducto, nombre, valor) VALUES (?, ?, ?)";
         PreparedStatement ps = null;
         try{
             ps = conn.prepareStatement(query);
@@ -267,21 +270,20 @@ public class HelperMySQL {
 
     //BORRAR TODAS LAS TABLAS DE LA BASE DE DATOS
     public void dropTables() throws SQLException {
+        //POR TEMAS DE LAS DEPENCIAS DE LAS TABLAS
+        //DEBEN BORRARSE EN EL ORDEN CORRECTO
         //CLIENTE
         String dropCliente = "DROP TABLE IF EXISTS Cliente";
-        this.conn.prepareStatement(dropCliente).execute();
-        this.conn.commit();
         //FACTURA
         String dropFactura = "DROP TABLE IF EXISTS Factura";
-        this.conn.prepareStatement(dropFactura).execute();
-        this.conn.commit();
         //FACTURA PRODUCTO
         String dropFacturaP = "DROP TABLE IF EXISTS Factura_producto";
-        this.conn.prepareStatement(dropFacturaP).execute();
-        this.conn.commit();
         //PRODUCTO
         String dropProducto = "DROP TABLE IF EXISTS Producto";
+        this.conn.prepareStatement(dropFacturaP).execute();
+        this.conn.prepareStatement(dropFactura).execute();
         this.conn.prepareStatement(dropProducto).execute();
+        this.conn.prepareStatement(dropCliente).execute();
         this.conn.commit();
     }
 

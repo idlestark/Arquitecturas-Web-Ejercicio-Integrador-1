@@ -1,10 +1,15 @@
 package dao;
 
 import entities.Cliente;
+import entities.Factura;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
 public class ClienteDAO {
     private Connection con;
     public ClienteDAO(Connection con){this.con = con;}
@@ -112,6 +117,44 @@ public class ClienteDAO {
             }
         }
     return salida;
+    }
+
+    //EJERCICIO 4
+
+    public List<Cliente> ejercicio4() {
+        String query = "SELECT c.idCliente, c.nombre, c.email, COUNT(f.idFactura) AS totalF FROM Cliente c "+
+                "LEFT JOIN Factura f ON c.idCliente = f.idCliente "+
+                "GROUP BY c.idCliente, c.nombre, c.email ORDER BY totalF DESC";
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        List<Cliente> clientes = null;
+        try{
+            ps = con.prepareStatement(query);
+            rs = ps.executeQuery();
+            clientes = new ArrayList<Cliente>();
+            while(rs.next()){
+                int idCliente = rs.getInt("idCliente");
+                String nombre = rs.getString("nombre");
+                String mail = rs.getString("email");
+                int TotalF = rs.getInt("totalF");
+                Cliente cliente = new Cliente(idCliente, nombre, mail);
+                clientes.add(cliente);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }finally {
+            try{
+                if(ps != null){
+                    ps.close();
+                }
+                if(rs != null){
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return clientes;
     }
 }
 

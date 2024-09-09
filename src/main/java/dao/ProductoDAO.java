@@ -126,11 +126,11 @@ public class ProductoDAO {
         float temp = 0;
         int idMayor = 0;
         ArrayList<Producto> listaProductos = getProductos();
-
         for(Producto producto : listaProductos){
             temp = getCantidad(producto.getIdProducto()) * producto.getValor();
-            if(temp > mayor){
+            if(temp > mayor) {
                 mayor = temp;
+                temp = 0;
                 idMayor = producto.getIdProducto();
             }
         }
@@ -138,7 +138,7 @@ public class ProductoDAO {
     }
 
     public int getCantidad(int id){
-        String query = "SELECT SUM(cantidad) AS cant FROM Factura-Producto WHERE idProducto = ?";
+        String query = "SELECT SUM(cantidad) AS cant FROM Factura_Producto WHERE idProducto = ?";
         PreparedStatement ps = null;
         ResultSet rs = null;
         int salida = 0;
@@ -146,7 +146,9 @@ public class ProductoDAO {
             ps = con.prepareStatement(query);
             ps.setInt(1, id);
             rs = ps.executeQuery();
-            salida = rs.getInt("cant");
+            if(rs.next()){
+                salida = rs.getInt("cant");
+            }
         }
         catch (SQLException e) {
             throw new RuntimeException(e);
@@ -156,11 +158,13 @@ public class ProductoDAO {
                 if(ps != null){
                     ps.close();
                 }
+                if(rs != null){
+                    rs.close();
+                }
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
         }
-
         return salida;
     }
 

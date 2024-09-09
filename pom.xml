@@ -24,12 +24,19 @@
         </dependency>
 
         <!-- Apache Derby -->
+        <!-- https://mvnrepository.com/artifact/org.apache.derby/derby -->
         <dependency>
             <groupId>org.apache.derby</groupId>
             <artifactId>derby</artifactId>
-            <version>10.14.2.0</version>
-            <scope>test</scope>
+            <version>10.17.1.0</version> <!-- Usa la versión que necesites -->
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.derby/derbytools -->
+        <dependency>
+            <groupId>org.apache.derby</groupId>
+            <artifactId>derbytools</artifactId>
+            <version>10.15.2.0</version>
+        </dependency>
+
     </dependencies>
 
     <properties>

@@ -4,10 +4,14 @@ import dao.ClienteDAO;
 import dao.FacturaDAO;
 import dao.FacturaProductoDAO;
 import dao.ProductoDAO;
+import entities.Cliente;
 import factory.AbstractFactory;
+import utils.HelperDerby;
 import utils.HelperMySQL;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws SQLException, IOException {
@@ -24,15 +28,10 @@ public class Main {
 
         AbstractFactory MysqlFactory = AbstractFactory.getDAOFactory(1);
         //NEGROS DE MIERDAAAAAAAAAAAAAAAAAAAAAAA
-        System.out.println();
-        System.out.println("////////////////////////////////////////////");
-        System.out.println("////////////////////////////////////////////");
-        System.out.println();
-
-        ClienteDAO cliente = MysqlFactory.getClienteDAO();
-        FacturaDAO factura = MysqlFactory.getFacturaDAO();
-        FacturaProductoDAO fap = MysqlFactory.getFacturaProductoDAO();
-        ProductoDAO producto = MysqlFactory.getProductoDAO();
+        ClienteDAO clienteMySQL = MysqlFactory.getClienteDAO();
+        FacturaDAO facturaMySQL = MysqlFactory.getFacturaDAO();
+        FacturaProductoDAO fapMySQL = MysqlFactory.getFacturaProductoDAO();
+        ProductoDAO productoMySQL = MysqlFactory.getProductoDAO();
 
         System.out.println();
         System.out.println("////////////////////////////////////////////");
@@ -40,6 +39,40 @@ public class Main {
         System.out.println();
 
         //EJERCICIO 3
-        System.out.println(producto.ejercicio3().toString());
+        System.out.println("Producto con mayor recaudacion: "+productoMySQL.ejercicio3().toString());
+        //EJERCICIO 4
+        List<Cliente> salida = clienteMySQL.ejercicio4();
+        for(Cliente c: salida){
+            System.out.println(c.toString());
+        }
+
+        //BASE DE DATOS DERBY
+        System.out.println("BASE DE DATOS DERBY");
+
+        HelperDerby dbDerby = new HelperDerby();
+        dbDerby.dropTables();
+        dbDerby.createTables();
+        dbDerby.populateDB();
+        dbDerby.closeConnection();
+
+        AbstractFactory DerbyFactory = AbstractFactory.getDAOFactory(2);
+        //NEGROS DE MIERDAAAAAAAAAAAAAAAAAAAAAAA
+        ClienteDAO clienteDerby = DerbyFactory.getClienteDAO();
+        FacturaDAO facturaDerby = DerbyFactory.getFacturaDAO();
+        FacturaProductoDAO fapDerby = DerbyFactory.getFacturaProductoDAO();
+        ProductoDAO productoDerby = DerbyFactory.getProductoDAO();
+
+        System.out.println();
+        System.out.println("////////////////////////////////////////////");
+        System.out.println("////////////////////////////////////////////");
+        System.out.println();
+
+        //EJERCICIO 3
+        //System.out.println("Producto con mayor recaudacion: "+productoDerby.ejercicio3().toString());
+        //EJERCICIO 4
+        List<Cliente> salidaDerby = clienteDerby.ejercicio4();
+        for(Cliente c: salidaDerby){
+            System.out.println(c.toString());
+        }
     }
 }

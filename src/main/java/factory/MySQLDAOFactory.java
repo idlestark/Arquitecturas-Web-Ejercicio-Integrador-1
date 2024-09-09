@@ -16,7 +16,7 @@ public class MySQLDAOFactory extends AbstractFactory {
     private static MySQLDAOFactory instance = null;
 
     public static final String DRIVER = "com.mysql.cj.jdbc.Driver";
-    public static final String uri = "jdbc:mysql://localhost:3306/integrador1";
+    public static final String uri = "jdbc:mysql://localhost:3306/MySQL_INTEGRADOR1";
     public static Connection conn;
 
     private MySQLDAOFactory() {
@@ -44,7 +44,7 @@ public class MySQLDAOFactory extends AbstractFactory {
         }
 
         try {
-            conn = DriverManager.getConnection(uri, "root", "");
+            conn = DriverManager.getConnection(uri, "root", "dragonoidEV19");
             conn.setAutoCommit(false);
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -72,10 +72,6 @@ public class MySQLDAOFactory extends AbstractFactory {
 
     public ClienteDAO getClienteDAO() {
         return new ClienteDAO(createConnection());
-    }
-
-    public FacturaProductoDAO getIdFactura() {
-        return new FacturaProductoDAO(createConnection());
     }
 
     public ProductoDAO getProductoDAO() {

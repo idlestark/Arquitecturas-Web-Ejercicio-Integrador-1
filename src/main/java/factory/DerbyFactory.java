@@ -68,7 +68,6 @@ public class DerbyFactory extends AbstractFactory{
         return new FacturaDAO(getConnection());
     }
 
-    @Override
     public FacturaProductoDAO getFacturaProductoDAO() {
         return new FacturaProductoDAO(getConnection());
     }
