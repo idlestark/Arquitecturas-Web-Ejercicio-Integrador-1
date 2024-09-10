@@ -11,8 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ClienteDAO {
+
     private Connection con;
     public ClienteDAO(Connection con){this.con = con;}
+
     public void insert(Cliente cliente){
         //METODO INSERT
         String query = "INSERT INTO Cliente(idCliente, nombre, email) VALUES (?, ?, ?)";
@@ -126,12 +128,11 @@ public class ClienteDAO {
                 "INNER JOIN Factura f ON c.idCliente = f.idCliente "+
                 "INNER JOIN Factura_Producto fp ON f.idFactura = fp.idFactura " +
                 "INNER JOIN Producto p ON p.idProducto = fp.idProducto " +
-                "GROUP BY c.idCliente ORDER BY totalF DESC";
-                //"GROUP BY c.idCliente, c.nombre, c.email ORDER BY totalF DESC";
+                "GROUP BY c.idCliente, c.nombre, c.email ORDER BY totalF DESC";
 
         PreparedStatement ps = null;
         ResultSet rs = null;
-        List<Cliente> clientes = null;
+        List<Cliente> clientes;
         try{
             ps = con.prepareStatement(query);
             rs = ps.executeQuery();

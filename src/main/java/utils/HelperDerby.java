@@ -381,8 +381,8 @@ public class HelperDerby {
 
         try {
             String dropCliente = "DROP TABLE Cliente";
-            conn.prepareStatement(dropCliente).execute();
-            conn.commit();
+            this.conn.prepareStatement(dropCliente).execute();
+            this.conn.commit();
         }
         catch (SQLException e) {
             // Verifica si el estado SQL indica que la tabla no existe

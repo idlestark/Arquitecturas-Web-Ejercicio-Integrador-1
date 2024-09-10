@@ -10,7 +10,6 @@ import utils.HelperDerby;
 import utils.HelperMySQL;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
@@ -45,7 +44,7 @@ public class Main {
         }
 
         //BASE DE DATOS DERBY
-        System.out.println("BASE DE DATOS DERBY - Tengo información que podría llevar al arresto de Cristina Frenandez de Kirchner");
+        System.out.println("BASE DE DATOS DERBY");
 
         HelperDerby dbDerby = new HelperDerby();
         dbDerby.dropTables();
