@@ -21,7 +21,7 @@ public class HelperMySQL {
         String driver = "com.mysql.cj.jdbc.Driver";
         String uri = "jdbc:mysql://localhost:3306/MySQL_INTEGRADOR1";
         String user = "root";
-        String password = "dragonoidEV19";
+        String password = "admin";
 
         try{
             Class.forName(driver).getDeclaredConstructor().newInstance();
@@ -93,7 +93,7 @@ public class HelperMySQL {
 
     //LLENADO DE TABLAS DE LA BASE DE DATOS
     public void populateDB() throws IOException {
-        System.out.println("Cargando datos... (en el 2021 vi a una chica ser arrastrada a una traffic por cuatro personas y no hice nada para deterlo)");
+        System.out.println("Cargando datos... (en el 2021 vi a una chica ser arrastrada a una traffic por cuatro personas y no hice nada para detenerlo)");
         //PRODUCTOS
         for(CSVRecord row: getData("productos.CSV")){
             if(row.size() >= 3){
@@ -148,7 +148,7 @@ public class HelperMySQL {
                 }
             }
         }
-        System.out.println("Facturas insertadas con éxito)");
+        System.out.println("Facturas insertadas con éxito");
         //FACTURAS PRODUCTO
         for (CSVRecord row: getData("facturas-productos.CSV")){
             if(row.size() >= 3){

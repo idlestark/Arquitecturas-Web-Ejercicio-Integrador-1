@@ -44,7 +44,7 @@ public class MySQLDAOFactory extends AbstractFactory {
         }
 
         try {
-            conn = DriverManager.getConnection(uri, "root", "dragonoidEV19");
+            conn = DriverManager.getConnection(uri, "root", "admin");
             conn.setAutoCommit(false);
         } catch (SQLException e) {
             throw new RuntimeException(e);

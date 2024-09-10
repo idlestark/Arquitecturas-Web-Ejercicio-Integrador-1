@@ -122,9 +122,13 @@ public class ClienteDAO {
     //EJERCICIO 4
 
     public List<Cliente> ejercicio4() {
-        String query = "SELECT c.idCliente, c.nombre, c.email, COUNT(f.idFactura) AS totalF FROM Cliente c "+
-                "LEFT JOIN Factura f ON c.idCliente = f.idCliente "+
-                "GROUP BY c.idCliente, c.nombre, c.email ORDER BY totalF DESC";
+        String query = "SELECT c.idCliente, c.nombre, c.email, SUM(fp.cantidad * p.valor) AS totalF FROM Cliente c "+
+                "INNER JOIN Factura f ON c.idCliente = f.idCliente "+
+                "INNER JOIN Factura_Producto fp ON f.idFactura = fp.idFactura " +
+                "INNER JOIN Producto p ON p.idProducto = fp.idProducto " +
+                "GROUP BY c.idCliente ORDER BY totalF DESC";
+                //"GROUP BY c.idCliente, c.nombre, c.email ORDER BY totalF DESC";
+
         PreparedStatement ps = null;
         ResultSet rs = null;
         List<Cliente> clientes = null;

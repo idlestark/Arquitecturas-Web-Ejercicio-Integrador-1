@@ -14,9 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
-    public static void main(String[] args) throws SQLException, IOException {
 
-        System.out.println("Hello world! voy a poner el nombre de esta materia en mi nota de suicidio");
+        public static void main(String[] args) throws SQLException, IOException {
 
         System.out.println("BASE DE DATOS SQL");
 
@@ -27,7 +26,6 @@ public class Main {
         dbMysql.closeConnection();
 
         AbstractFactory MysqlFactory = AbstractFactory.getDAOFactory(1);
-        //NEGROS DE MIERDAAAAAAAAAAAAAAAAAAAAAAA
         ClienteDAO clienteMySQL = MysqlFactory.getClienteDAO();
         FacturaDAO facturaMySQL = MysqlFactory.getFacturaDAO();
         FacturaProductoDAO fapMySQL = MysqlFactory.getFacturaProductoDAO();
@@ -39,7 +37,7 @@ public class Main {
         System.out.println();
 
         //EJERCICIO 3
-        System.out.println("Producto con mayor recaudacion: "+productoMySQL.ejercicio3().toString());
+        System.out.println("Producto con mayor recaudación: "+productoMySQL.ejercicio3().toString());
         //EJERCICIO 4
         List<Cliente> salida = clienteMySQL.ejercicio4();
         for(Cliente c: salida){
@@ -47,7 +45,7 @@ public class Main {
         }
 
         //BASE DE DATOS DERBY
-        System.out.println("BASE DE DATOS DERBY");
+        System.out.println("BASE DE DATOS DERBY - Tengo información que podría llevar al arresto de Cristina Frenandez de Kirchner");
 
         HelperDerby dbDerby = new HelperDerby();
         dbDerby.dropTables();
@@ -56,7 +54,6 @@ public class Main {
         dbDerby.closeConnection();
 
         AbstractFactory DerbyFactory = AbstractFactory.getDAOFactory(2);
-        //NEGROS DE MIERDAAAAAAAAAAAAAAAAAAAAAAA
         ClienteDAO clienteDerby = DerbyFactory.getClienteDAO();
         FacturaDAO facturaDerby = DerbyFactory.getFacturaDAO();
         FacturaProductoDAO fapDerby = DerbyFactory.getFacturaProductoDAO();
