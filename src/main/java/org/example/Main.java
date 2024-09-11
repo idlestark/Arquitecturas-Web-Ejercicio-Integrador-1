@@ -4,6 +4,7 @@ import dao.ClienteDAO;
 import dao.FacturaDAO;
 import dao.FacturaProductoDAO;
 import dao.ProductoDAO;
+import dto.ClienteDTO;
 import entities.Cliente;
 import factory.AbstractFactory;
 import utils.HelperDerby;
@@ -38,8 +39,8 @@ public class Main {
         //EJERCICIO 3
         System.out.println("Producto con mayor recaudación: "+productoMySQL.ejercicio3().toString());
         //EJERCICIO 4
-        List<Cliente> salida = clienteMySQL.ejercicio4();
-        for(Cliente c: salida){
+        List<ClienteDTO> salida = clienteMySQL.ejercicio4();
+        for(ClienteDTO c: salida){
             System.out.println(c.toString());
         }
 
@@ -66,9 +67,9 @@ public class Main {
         //EJERCICIO 3
         System.out.println("Producto con mayor recaudacion: "+productoDerby.ejercicio3().toString());
         //EJERCICIO 4
-        List<Cliente> salidaDerby = clienteDerby.ejercicio4();
-        for(Cliente c: salidaDerby){
-            System.out.println(c.toString());
-        }
+//        List<Cliente> salidaDerby = clienteDerby.ejercicio4();
+//        for(Cliente c: salidaDerby){
+//            System.out.println(c.toString());
+//        }
     }
 }

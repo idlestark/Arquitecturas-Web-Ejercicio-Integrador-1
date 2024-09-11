@@ -1,11 +1,11 @@
 ----------------------------------------------------------------
-Wed Sep 11 14:54:13 ART 2024:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.17.1.0 - (1913217): instance a816c00e-0191-e238-b615-00001f1bde40 
-on database directory C:\Users\idles\OneDrive\Documentos\GitHub\Arquitecturas-Web-Ejercicio-Integrador-1\INTEGRADOR1 with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528 
-Loaded from file:/C:/Users/idles/.m2/repository/org/apache/derby/derby/10.17.1.0/derby-10.17.1.0.jar
+Wed Sep 11 20:27:03 ART 2024:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.17.1.0 - (1913217): instance a816c00e-0191-e369-6f60-00000f2f88c0 
+on database directory C:\Users\nacho\OneDrive\Desktop\COSAS ARQUITECTURA\INTEGRADOR1\Arquitecturas-Web-Ejercicio-Integrador-1\INTEGRADOR1 with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528 
+Loaded from file:/C:/Users/nacho/.m2/repository/org/apache/derby/derby/10.17.1.0/derby-10.17.1.0.jar
 java.vendor=Oracle Corporation
-java.runtime.version=22.0.2+9-70
-user.dir=C:\Users\idles\OneDrive\Documentos\GitHub\Arquitecturas-Web-Ejercicio-Integrador-1
+java.runtime.version=22.0.1+8-16
+user.dir=C:\Users\nacho\OneDrive\Desktop\COSAS ARQUITECTURA\INTEGRADOR1\Arquitecturas-Web-Ejercicio-Integrador-1
 os.name=Windows 11
 os.arch=amd64
 os.version=10.0

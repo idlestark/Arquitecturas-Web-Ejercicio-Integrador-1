@@ -1,5 +1,6 @@
 package dao;
 
+import dto.ProductoDTO;
 import entities.FacturaProducto;
 import entities.Producto;
 
@@ -120,10 +121,10 @@ public class ProductoDAO {
     //“recaudación” como cantidad de productos vendidos multiplicado por su valor.
 
 
-    public Producto ejercicio3() {
+    public ProductoDTO ejercicio3() {
         PreparedStatement ps = null;
         ResultSet rs = null;
-        Producto produ = null;
+        ProductoDTO producto = null;
         String query;
 
         try {
@@ -143,7 +144,6 @@ public class ProductoDAO {
                         ") recaudacion ON p.idProducto = recaudacion.idProducto " +
                         "ORDER BY recaudacion.total DESC LIMIT 1";
             } else if (dbName.contains("derby")) {
-                //NO ANDA NADA ESTA PORONGA LOCO
                query = "SELECT p.idProducto, p.nombre, p.valor, recaudacion.total" +
                " FROM Producto p" +
               "  INNER JOIN (" +
@@ -162,10 +162,9 @@ public class ProductoDAO {
             ps = con.prepareStatement(query);
             rs = ps.executeQuery();
             if (rs.next()) {
-                int idProducto = rs.getInt("idProducto");
                 String nombre = rs.getString("nombre");
                 Float valor = rs.getFloat("valor");
-                produ = new Producto(idProducto, nombre, valor);
+                producto = new ProductoDTO( nombre, valor);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -181,6 +180,6 @@ public class ProductoDAO {
                 throw new RuntimeException(e);
             }
         }
-        return produ;
+        return producto;
     }
 }

@@ -95,7 +95,7 @@ public class HelperMySQL {
     public void populateDB() throws IOException {
         System.out.println("Cargando datos...");
         //PRODUCTOS
-        for(CSVRecord row: getData("productos.CSV")){
+        for(CSVRecord row: getData("productos.csv")){
             if(row.size() >= 3){
                 String idProducto = row.get(0);
                 String nombre = row.get(1);

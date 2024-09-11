@@ -1,5 +1,6 @@
 package dao;
 
+import dto.ClienteDTO;
 import entities.Cliente;
 import entities.Factura;
 
@@ -123,7 +124,7 @@ public class ClienteDAO {
 
     //EJERCICIO 4
 
-    public List<Cliente> ejercicio4() {
+    public List<ClienteDTO> ejercicio4() {
         String query = "SELECT c.idCliente, c.nombre, c.email, SUM(fp.cantidad * p.valor) AS totalF FROM Cliente c "+
                 "INNER JOIN Factura f ON c.idCliente = f.idCliente "+
                 "INNER JOIN Factura_Producto fp ON f.idFactura = fp.idFactura " +
@@ -132,17 +133,15 @@ public class ClienteDAO {
 
         PreparedStatement ps = null;
         ResultSet rs = null;
-        List<Cliente> clientes;
+        List<ClienteDTO> clientes;
         try{
             ps = con.prepareStatement(query);
             rs = ps.executeQuery();
-            clientes = new ArrayList<Cliente>();
+            clientes = new ArrayList<ClienteDTO>();
             while(rs.next()){
-                int idCliente = rs.getInt("idCliente");
                 String nombre = rs.getString("nombre");
-                String mail = rs.getString("email");
                 int TotalF = rs.getInt("totalF");
-                Cliente cliente = new Cliente(idCliente, nombre, mail);
+                ClienteDTO cliente = new ClienteDTO(nombre, TotalF);
                 clientes.add(cliente);
             }
         } catch (SQLException e) {
