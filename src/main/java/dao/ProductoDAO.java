@@ -2,10 +2,8 @@ package dao;
 
 import entities.FacturaProducto;
 import entities.Producto;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+
+import java.sql.*;
 import java.util.ArrayList;
 
 public class ProductoDAO {
@@ -123,19 +121,52 @@ public class ProductoDAO {
 
 
     public Producto ejercicio3() {
-        String query = "SELECT p.idProducto, p.nombre, p.valor, SUM(f.cantidad * p.valor) AS total FROM Producto p " +
-                "INNER JOIN Factura_Producto f ON p.idProducto = f.idProducto " +
-                "GROUP BY p.idProducto ORDER BY total DESC LIMIT 1";
         PreparedStatement ps = null;
         ResultSet rs = null;
         Producto produ = null;
+        String query;
+
         try {
+            // Obtener los metadatos de la base de datos para detectar el DBMS
+            DatabaseMetaData metaData = con.getMetaData();
+            String dbName = metaData.getDatabaseProductName().toLowerCase();
+
+            // Construir la consulta basada en el DBMS
+            if (dbName.contains("mysql")) {
+                query = "SELECT p.idProducto, p.nombre, p.valor, recaudacion.total " +
+                        "FROM Producto p " +
+                        "INNER JOIN ( " +
+                        "    SELECT f.idProducto, SUM(f.cantidad * p.valor) AS total " +
+                        "    FROM Factura_Producto f " +
+                        "    INNER JOIN Producto p ON p.idProducto = f.idProducto " +
+                        "    GROUP BY f.idProducto " +
+                        ") recaudacion ON p.idProducto = recaudacion.idProducto " +
+                        "ORDER BY recaudacion.total DESC LIMIT 1";
+            } else if (dbName.contains("derby")) {
+                //NO ANDA NADA ESTA PORONGA LOCO
+               query = "SELECT p.idProducto, p.nombre, p.valor, recaudacion.total" +
+               " FROM Producto p" +
+              "  INNER JOIN (" +
+                "       SELECT f.idProducto, SUM(f.cantidad * p.valor) AS total " +
+               " FROM Factura_Producto f" +
+               " INNER JOIN Producto p ON p.idProducto = f.idProducto" +
+              "  GROUP BY f.idProducto" +
+                ") recaudacion ON p.idProducto = recaudacion.idProducto" +
+               " ORDER BY recaudacion.total DESC" +
+             " FETCH FIRST ROW ONLY";
+
+            } else {
+                throw new RuntimeException("Base de datos no soportada: " + dbName);
+            }
+
             ps = con.prepareStatement(query);
             rs = ps.executeQuery();
-            int idProducto = rs.getInt("idProducto");
-            String nombre = rs.getString("nombre");
-            int valor = rs.getInt("valor");
-            produ = new Producto(idProducto, nombre, valor);
+            if (rs.next()) {
+                int idProducto = rs.getInt("idProducto");
+                String nombre = rs.getString("nombre");
+                Float valor = rs.getFloat("valor");
+                produ = new Producto(idProducto, nombre, valor);
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
@@ -149,8 +180,7 @@ public class ProductoDAO {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
-            return produ;
         }
-
+        return produ;
     }
 }

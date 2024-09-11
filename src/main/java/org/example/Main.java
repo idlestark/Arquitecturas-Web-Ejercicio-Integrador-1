@@ -64,7 +64,7 @@ public class Main {
         System.out.println();
 
         //EJERCICIO 3
-        //System.out.println("Producto con mayor recaudacion: "+productoDerby.ejercicio3().toString());
+        System.out.println("Producto con mayor recaudacion: "+productoDerby.ejercicio3().toString());
         //EJERCICIO 4
         List<Cliente> salidaDerby = clienteDerby.ejercicio4();
         for(Cliente c: salidaDerby){
