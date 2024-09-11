@@ -93,7 +93,7 @@ public class HelperMySQL {
 
     //LLENADO DE TABLAS DE LA BASE DE DATOS
     public void populateDB() throws IOException {
-        System.out.println("Cargando datos... (en el 2021 vi a una chica ser arrastrada a una traffic por cuatro personas y no hice nada para detenerlo)");
+        System.out.println("Cargando datos...");
         //PRODUCTOS
         for(CSVRecord row: getData("productos.CSV")){
             if(row.size() >= 3){

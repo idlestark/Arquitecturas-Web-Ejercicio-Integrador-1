@@ -11,12 +11,12 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 
-public class DerbyFactory extends AbstractFactory{
+public class DerbyFactory extends AbstractFactory {
 
     private static DerbyFactory instance = null;
 
     private static final String DRIVER = "org.apache.derby.jdbc.EmbeddedDriver";
-    private static final String uri = "jdbc:derby:exampleDB;create=true";
+    private static final String uri = "jdbc:derby:INTEGRADOR1;create=true";
     public static Connection conn;
 
     private DerbyFactory(){

@@ -1,20 +1,7 @@
 ----------------------------------------------------------------
-Tue Sep 10 16:31:24 ART 2024:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.17.1.0 - (1913217): instance a816c00e-0191-dd6b-53e7-00000d279688 
+Tue Sep 10 17:03:04 ART 2024:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.17.1.0 - (1913217): instance a816c00e-0191-dd88-5354-00000d24c4f8 
 on database directory F:\Carpetas default\Documentos\GitHub\Arquitecturas-Web-Ejercicio-Integrador-1\INTEGRADOR1 with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528 
-Loaded from file:/C:/Users/Agust%c3%adn/.m2/repository/org/apache/derby/derby/10.17.1.0/derby-10.17.1.0.jar
-java.vendor=Oracle Corporation
-java.runtime.version=22.0.2+9-70
-user.dir=F:\Carpetas default\Documentos\GitHub\Arquitecturas-Web-Ejercicio-Integrador-1
-os.name=Windows 10
-os.arch=amd64
-os.version=10.0
-derby.system.home=null
-Database Class Loader started - derby.database.classpath=''
-----------------------------------------------------------------
-Tue Sep 10 16:31:42 ART 2024:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.17.1.0 - (1913217): instance b77c4d5f-0191-dd6b-53e7-00000d279688 
-on database directory F:\Carpetas default\Documentos\GitHub\Arquitecturas-Web-Ejercicio-Integrador-1\exampleDB with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528 
 Loaded from file:/C:/Users/Agust%c3%adn/.m2/repository/org/apache/derby/derby/10.17.1.0/derby-10.17.1.0.jar
 java.vendor=Oracle Corporation
 java.runtime.version=22.0.2+9-70
