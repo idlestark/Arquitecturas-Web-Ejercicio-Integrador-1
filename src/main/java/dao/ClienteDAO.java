@@ -139,9 +139,11 @@ public class ClienteDAO {
             rs = ps.executeQuery();
             clientes = new ArrayList<ClienteDTO>();
             while(rs.next()){
+                int id = rs.getInt("idCliente");
                 String nombre = rs.getString("nombre");
                 int TotalF = rs.getInt("totalF");
-                ClienteDTO cliente = new ClienteDTO(nombre, TotalF);
+                String email = rs.getString("email");
+                ClienteDTO cliente = new ClienteDTO(id ,nombre, email,TotalF);
                 clientes.add(cliente);
             }
         } catch (SQLException e) {

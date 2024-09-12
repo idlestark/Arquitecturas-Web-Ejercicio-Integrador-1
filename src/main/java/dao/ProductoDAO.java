@@ -128,13 +128,7 @@ public class ProductoDAO {
         String query;
 
         try {
-            // Obtener los metadatos de la base de datos para detectar el DBMS
-            DatabaseMetaData metaData = con.getMetaData();
-            String dbName = metaData.getDatabaseProductName().toLowerCase();
-
-            // Construir la consulta basada en el DBMS
-            if (dbName.contains("mysql")) {
-                query = "SELECT p.idProducto, p.nombre, p.valor, recaudacion.total " +
+            query = "SELECT p.idProducto, p.nombre, p.valor, recaudacion.total " +
                         "FROM Producto p " +
                         "INNER JOIN ( " +
                         "    SELECT f.idProducto, SUM(f.cantidad * p.valor) AS total " +
@@ -143,28 +137,14 @@ public class ProductoDAO {
                         "    GROUP BY f.idProducto " +
                         ") recaudacion ON p.idProducto = recaudacion.idProducto " +
                         "ORDER BY recaudacion.total DESC LIMIT 1";
-            } else if (dbName.contains("derby")) {
-               query = "SELECT p.idProducto, p.nombre, p.valor, recaudacion.total" +
-               " FROM Producto p" +
-              "  INNER JOIN (" +
-                "       SELECT f.idProducto, SUM(f.cantidad * p.valor) AS total " +
-               " FROM Factura_Producto f" +
-               " INNER JOIN Producto p ON p.idProducto = f.idProducto" +
-              "  GROUP BY f.idProducto" +
-                ") recaudacion ON p.idProducto = recaudacion.idProducto" +
-               " ORDER BY recaudacion.total DESC" +
-             " FETCH FIRST ROW ONLY";
-
-            } else {
-                throw new RuntimeException("Base de datos no soportada: " + dbName);
-            }
-
             ps = con.prepareStatement(query);
             rs = ps.executeQuery();
             if (rs.next()) {
+                int idProducto = rs.getInt("idProducto");
                 String nombre = rs.getString("nombre");
                 Float valor = rs.getFloat("valor");
-                producto = new ProductoDTO( nombre, valor);
+                Float total = rs.getFloat("total");
+                producto = new ProductoDTO(idProducto, nombre, valor, total);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

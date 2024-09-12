@@ -2,12 +2,20 @@ package dto;
 
 public class ProductoDTO {
 
+    private int idProducto;
     private String nombreP;
-    private float precio;
+    private float valor;
+    private float recaudacion;
 
-    public ProductoDTO(String nombreP, float precio) {
+    public ProductoDTO(int idProductom, String nombreP, float valor, float recaudacion){
+        this.idProducto = idProductom;
         this.nombreP = nombreP;
-        this.precio = precio;
+        this.valor = valor;
+        this.recaudacion = recaudacion;
+    }
+
+    public int getIdProducto() {
+        return idProducto;
     }
 
     public String getNombreP() {
@@ -18,19 +26,29 @@ public class ProductoDTO {
         this.nombreP = nombreP;
     }
 
-    public float getPrecio() {
-        return precio;
+    public float getValor() {
+        return valor;
     }
 
-    public void setPrecio(float precio) {
-        this.precio = precio;
+    public void setValor(float valor) {
+        this.valor = valor;
+    }
+
+    public float getRecaudacion() {
+        return recaudacion;
+    }
+
+    public void setRecaudacion(float recaudacion) {
+        this.recaudacion = recaudacion;
     }
 
     @Override
     public String toString() {
         return "ProductoDTO{" +
-                "nombreP='" + nombreP + '\'' +
-                ", precio=" + precio +
+                "idProducto=" + idProducto +
+                ", nombreP='" + nombreP + '\'' +
+                ", valor=" + valor +
+                ", recaudacion=" + recaudacion +
                 '}';
     }
 }
